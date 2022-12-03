@@ -1,15 +1,13 @@
-#include<iostream>
-#include<string>
-
+#include "cpps/person.hpp"
 using namespace std;
 
-int main() {
-    string message {"your first c++20 project works. "};
-    if (message.starts_with("your")) {
-        // string.starts_with 是 c++ 20 才有的新方法
-        cout<<message<<endl;
-        return 0;
-    }
-    cout<<"faild. your c++20 env not ready. "<<endl;
-    return 1;
+int main(int argc, char *argv[])
+{
+    Person tom = Person("tom", 16);
+    Person jerry = Person("jerry0", 18);
+
+    bool tom_less_then_jerry = tom < jerry;
+
+    cout << "tom less then jerry  = " << tom_less_then_jerry << " ." << endl;
+    return 0;
 }

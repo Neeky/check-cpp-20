@@ -1,4 +1,4 @@
-# check-cpp-20
-# check-cpp-20
-# check-cpp-20
-# check-cpp-20
+## 目标
+这是一个模板项目用于检查 clang++ & cmake 环境是不是已经支持 c++20 。
+
+---
