@@ -1,28 +1,36 @@
+
 #!/usr/bin/env bpftrace 
 
 /*
-
+追踪 /data/repos/cpp-20/build/cpps 程序 的 hello 函数的执行耗时
+作者: 蒋乐兴
+时间: 2022-02-17
 */
 
+// BEGIN 和 END 是两个特别的 probe ， 由于不需要过滤条件，所以 condition 部分就省略了
+// 追踪启动时执行的 action 
 BEGIN 
 {
     printf("**** start trace cpps.hello function time cost ****\n");
 }
 
+// 函数开始执行时对应的 action 
 uprobe:/data/repos/cpp-20/build/cpps:hello 
-{
+{   // 记录一下开始执行的时候到 @start[cmmm] 变量中
     print("enter function hello .");
     @start[comm] = nsecs;
 }
 
+// 函数执行完成对应的 action
 uretprobe:/data/repos/cpp-20/build/cpps:hello  / @start[comm] /
-{
+{   // 取得函数返回时的时间，并计算耗时
+    // 清理 @start[comm] 变量为下一次执行做准备
     print("exit  function hello .");
     printf("time-cost %d (ns) \n\n", (nsecs - @start[comm]));
     delete(@start[comm]);
-    
 }
 
+// 追踪退出时要执行 action 
 END 
 {
     printf("**** end trace cpps.hello function time cost   ****\n");
