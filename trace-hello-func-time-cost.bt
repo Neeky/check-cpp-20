@@ -1,0 +1,30 @@
+#!/usr/bin/env bpftrace 
+
+/*
+
+*/
+
+BEGIN 
+{
+    printf("**** start trace cpps.hello function time cost ****\n");
+}
+
+uprobe:/data/repos/cpp-20/build/cpps:hello 
+{
+    print("enter function hello .");
+    @start[comm] = nsecs;
+}
+
+uretprobe:/data/repos/cpp-20/build/cpps:hello  / @start[comm] /
+{
+    print("exit  function hello .");
+    printf("time-cost %d (ns) \n\n", (nsecs - @start[comm]));
+    delete(@start[comm]);
+    
+}
+
+END 
+{
+    printf("**** end trace cpps.hello function time cost   ****\n");
+    clear(@start);
+}
