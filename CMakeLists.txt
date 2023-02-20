@@ -19,6 +19,3 @@ file(GLOB_RECURSE srcs CONFIGURE_DEPENDS src/*.cpp)
 add_executable(cpps ${srcs} )
 
 set_property(TARGET cpps  PROPERTY CXX_STANDARD 20)
-target_include_directories(cpps  PUBLIC
-                           "include"
-                           )
